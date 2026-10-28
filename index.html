@@ -6,14 +6,14 @@
     <title>Yelo AI</title>
     <style>
         :root {
-            --bg-main: #131316;
-            --bg-sidebar: #18181b;
-            --bg-panel: #1e1e24;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --accent: #8b5cf6;
-            --accent-hover: #7c3aed;
+            --bg-main: #0c0d0e;
+            --bg-sidebar: #121315;
+            --bg-panel: #161719;
+            --border-color: rgba(255, 255, 255, 0.05);
+            --accent-purple: #8b5cf6;
+            --accent-yellow: #fbbf24;
             --text-main: #f4f4f5;
-            --text-muted: #a1a1aa;
+            --text-muted: #8e8e93;
             --bubble-user: #27272a;
             --bubble-ai: transparent;
         }
@@ -55,12 +55,14 @@
             font-weight: 500;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
-            transition: background 0.2s;
+            transition: all 0.2s ease;
         }
 
         .new-chat-btn:hover {
             background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
         .history-list {
@@ -80,6 +82,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            transition: all 0.2s ease;
         }
 
         .history-item:hover {
@@ -99,7 +102,7 @@
         .chat-header {
             padding: 16px 24px;
             border-bottom: 1px solid var(--border-color);
-            background: rgba(19, 19, 22, 0.8);
+            background: rgba(12, 13, 14, 0.8);
             backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
@@ -109,17 +112,24 @@
         .brand {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
+            letter-spacing: -0.2px;
         }
 
-        .brand-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent);
+        .brand-logo {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-text {
+            background: linear-gradient(135deg, var(--text-main) 60%, var(--accent-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .chat-messages {
@@ -142,7 +152,7 @@
             max-width: 768px;
             width: 100%;
             display: flex;
-            gap: 16px;
+            gap: 20px;
             padding: 0 16px;
         }
 
@@ -153,20 +163,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
-            font-size: 0.85rem;
             flex-shrink: 0;
         }
 
         .user-avatar {
             background: #3f3f46;
             color: white;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
         .ai-avatar {
-            background: var(--accent);
-            color: white;
-            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+            background: var(--bg-panel);
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
 
         .message-text {
@@ -195,12 +205,12 @@
             display: flex;
             align-items: flex-end;
             gap: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             transition: border-color 0.2s;
         }
 
         .input-box:focus-within {
-            border-color: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
         textarea {
@@ -231,22 +241,19 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: opacity 0.2s, transform 0.1s;
+            transition: all 0.2s ease;
             flex-shrink: 0;
         }
 
         .send-btn:hover {
-            opacity: 0.9;
-        }
-
-        .send-btn:active {
-            transform: scale(0.95);
+            transform: scale(1.05);
+            background: #fff;
         }
 
         /* Loading indicator */
         .typing-indicator span {
-            height: 8px;
-            width: 8px;
+            height: 6px;
+            width: 6px;
             float: left;
             margin: 0 2px;
             background-color: var(--text-muted);
@@ -271,33 +278,55 @@
 
     <sidebar>
         <button class="new-chat-btn" onclick="location.reload()">
-            <span>+</span> Nowa rozmowa
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Nowa rozmowa
         </button>
         <div class="history-list">
-            <div class="history-item">Rozmowa z Yelo AI</div>
+            <div class="history-item">Dzisiejsza rozmowa</div>
         </div>
     </sidebar>
 
     <div class="chat-main">
         <header class="chat-header">
             <div class="brand">
-                <div class="brand-dot"></div>
-                Yelo AI
+                <div class="brand-logo">
+                    <!-- Minimalistyczne logo Y z image_4.png przeniesione na SVG -->
+                    <svg viewBox="0 0 100 120" width="100%" height="100%">
+                        <defs>
+                            <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#8b5cf6" />
+                                <stop offset="100%" stop-color="#4c1d95" />
+                            </linearGradient>
+                            <linearGradient id="yellowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#fbbf24" />
+                                <stop offset="100%" stop-color="#f59e0b" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M20,10 L45,60 L45,110" stroke="url(#purpleGrad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                        <path d="M80,10 L50,65" stroke="url(#yellowGrad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                    </svg>
+                </div>
+                <span class="brand-text">Yelo AI</span>
             </div>
         </header>
 
         <div class="chat-messages" id="chatMessages">
             <div class="message-row">
                 <div class="message-content">
-                    <div class="avatar ai-avatar">Y</div>
-                    <div class="message-text">Cześć. Jestem Yelo AI. W czym mogę Ci dzisiaj pomóc?</div>
+                    <div class="avatar ai-avatar">
+                        <svg viewBox="0 0 100 120" width="20" height="20">
+                            <path d="M20,10 L45,60 L45,110" stroke="#8b5cf6" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                            <path d="M80,10 L50,65" stroke="#fbbf24" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                        </svg>
+                    </div>
+                    <div class="message-text">Cześć! Jestem Yelo AI, Twoja nowa inteligencja. O czym porozmawiamy dzisiaj?</div>
                 </div>
             </div>
         </div>
 
         <div class="input-container">
             <div class="input-box">
-                <textarea id="userInput" rows="1" placeholder="Wiadomość do Yelo AI..." onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+                <textarea id="userInput" rows="1" placeholder="Napisz do Yelo AI..." onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
                 <button class="send-btn" onclick="sendMessage()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
                 </button>
@@ -306,7 +335,6 @@
     </div>
 
     <script>
-        // Automatyczne powiększanie pola tekstowego
         function autoResize(textarea) {
             textarea.style.height = 'auto';
             textarea.style.height = textarea.scrollHeight + 'px';
@@ -327,26 +355,26 @@
             input.value = '';
             input.style.height = 'auto';
 
-            // Dodaj wiadomość użytkownika
             appendMessage(text, 'user');
 
-            // Kontener na odpowiedź AI ze wskaźnikiem pisania
+            // Pokazujemy że Yelo AI myśli
             const aiRow = appendMessage('<div class="typing-indicator"><span></span><span></span><span></span></div>', 'ai', true);
             const textElement = aiRow.querySelector('.message-text');
 
             try {
-                // TUTAJ PODPINAMY BEZPIECZNY BACKEND / PROXY (np. Cloudflare Worker lub Twój serwer), 
-                // który ukrywa klucz API przed użytkownikami strony.
+                // Wpisz tutaj swój darmowy klucz z Groq Console: https://console.groq.com/
+                const API_KEY = "TWÓJ_KLUCZ_API_GROQ"; 
+
                 const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                     method: "POST",
                     headers: {
-                        "Authorization": "Bearer TUTAJ_BEZPIECZNY_KLUCZ_PROXY", // W wersji produkcyjnej idzie to przez Twój skrypt na serwerze
+                        "Authorization": `Bearer ${API_KEY}`,
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
                         model: "qwen-2.5-32b",
                         messages: [
-                            { role: "system", content: "Jesteś profesjonalnym systemem sztucznej inteligencji Yelo AI. Odpowiadaj naturalnie i mądrze po polsku." },
+                            { role: "system", content: "Jesteś profesjonalnym systemem sztucznej inteligencji o nazwie Yelo AI. Odpowiadasz mądrze, nowocześnie i po polsku." },
                             { role: "user", content: text }
                         ]
                     })
@@ -356,10 +384,10 @@
                 if (data.choices && data.choices[0]) {
                     textElement.innerText = data.choices[0].message.content;
                 } else {
-                    textElement.innerText = "Wystąpił błąd podczas generowania odpowiedzi.";
+                    textElement.innerText = "Yelo AI: Napotkałem problem z autoryzacją API.";
                 }
             } catch (err) {
-                textElement.innerText = "Błąd połączenia z serwerem Yelo AI.";
+                textElement.innerText = "Yelo AI: Wystąpił błąd połączenia z siecią.";
             }
         }
 
@@ -374,7 +402,16 @@
 
             const avatar = document.createElement('div');
             avatar.className = `avatar ${sender === 'user' ? 'user-avatar' : 'ai-avatar'}`;
-            avatar.innerText = sender === 'user' ? 'U' : 'Y';
+            
+            if (sender === 'user') {
+                avatar.innerText = 'U';
+            } else {
+                avatar.innerHTML = `
+                    <svg viewBox="0 0 100 120" width="18" height="18">
+                        <path d="M20,10 L45,60 L45,110" stroke="#8b5cf6" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                        <path d="M80,10 L50,65" stroke="#fbbf24" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                    </svg>`;
+            }
 
             const text = document.createElement('div');
             text.className = 'message-text';
